@@ -4,7 +4,7 @@ import Footer from './Footer';
 
 function App () {
   return (
-    <div className="App">
+    <div className="App page">
       <Header />
       <Main />
       <Footer />
@@ -14,10 +14,12 @@ function App () {
 
 export default App;
 
+
+
+
 /*
 function App() {
   return (
-    <div className="App">
     <div className="page">
 
         <div className="popup popup_edit">
@@ -57,7 +59,6 @@ function App() {
             </figure>
           </div>
         </div>
-    </div>
 
         <div className="popup popup_delete-card">
           <div className="popup__container form">
@@ -92,7 +93,7 @@ function App() {
         </article>
       </li>
     </template>
-    </div>
+
   );
 }
 
