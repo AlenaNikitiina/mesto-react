@@ -1,36 +1,24 @@
-//import logo from './logo.svg';
-import './App.css';
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
 
+function App () {
+  return (
+    <div className="App">
+      <Header />
+      <Main />
+      <Footer />
+    </div>
+  )
+}
+
+export default App;
+
+/*
 function App() {
   return (
     <div className="App">
-        <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <div className="page">
-        <header className="header">
-            <img className="header__logo" src="<%=require('./images/logo-Vector.png')%>" alt="логотип приложения Место" />
-        </header>
-        <main>
-          <section className="profile">
-            <div className="profile__description">
-              <img className="profile__avatar" src="<%=require('./images/profile__avatar.jpg')%>"alt="Ваш аватар" />
-              <div className="profile__info">
-                <h1 className="profile__name titleName"></h1>
-                <p className="profile__job titleJob"></p>
-                <button className="profile__edit-button" type="button"></button>
-              </div>
-            </div>
-            <button className="profile__add-button" type="button"></button>
-          </section>
-          <section className="elements" aria-label="ваши фотографии">
-            <ul className="elements__list">
-            </ul>
-          </section>
-        </main>
-        <footer className="footer">
-          <p className="footer__copyright">© 2022 Alena Nikitina</p>
-        </footer>
 
         <div className="popup popup_edit">
           <div className="popup__container form">
@@ -108,4 +96,4 @@ function App() {
   );
 }
 
-export default App;
+*/
