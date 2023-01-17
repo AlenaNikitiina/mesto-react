@@ -5,8 +5,17 @@ import App from './components/App';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+
+root.render (
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
+
+
+/*
+ReactDOM.render(
+  (<div>
+  <h2>Грустные факты о животных</h2>
+</div>
+), document.querySelector('#root'));*/
