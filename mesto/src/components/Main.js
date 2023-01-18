@@ -1,4 +1,4 @@
-import profileAvatar from '../images/profile__avatar.jpg' // базовый аватар
+import React from "react";
 
 export default function Main (props) {
   return (
@@ -6,10 +6,10 @@ export default function Main (props) {
   <div className="page">
     <section className="profile">
       <div className="profile__description">
-        <img className="profile__avatar" src={profileAvatar} alt="Ваш аватар" onClick={props.onEditAvatar} />
+        <img className="profile__avatar" src={props.userAvatar} alt="Ваш аватар" onClick={props.onEditAvatar} />
         <div className="profile__info">
-          <h1 className="profile__name titleName">name</h1>
-          <p className="profile__job titleJob">job</p>
+          <h1 className="profile__name titleName">{props.userName}</h1>
+          <p className="profile__job titleJob">{props.userDescription}</p>
           <button className="profile__edit-button" type="button" onClick={props.onEditProfile}></button>
         </div>
       </div>
@@ -37,3 +37,12 @@ export default function Main (props) {
   </>
   )
 }
+
+
+/*
+    //стейт
+    const [userName, setUserName] =               useState({});
+    const [userDescription, setUserDescription] = useState({});
+    const [userAvatar, setUserAvatar] =           useState({});
+    const [cards, setCard] =                    useState([]);\
+  */
