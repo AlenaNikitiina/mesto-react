@@ -34,11 +34,11 @@ export default function App () {
     setIsEditAvatarPopupOpen (true)
   }
 
-  function handleEditProfileClick() {
+  function handleEditProfileClick () {
     setIsEditProfilePopupOpen (true)
   }
 
-  function handleAddPlaceClick() {
+  function handleAddPlaceClick () {
     setIsEditAddPlacePopupOpen (true)
   }
 
@@ -50,7 +50,7 @@ export default function App () {
     setSelectedCard(card);
   }
 
-  function closeAllPopups() {
+  function closeAllPopups () {
     setIsCloseAllPopups (false);
     setSelectedCard(null);
   }
