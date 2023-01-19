@@ -8,10 +8,10 @@ export default function Card (props) {
     <div className="element-template">
       <li className="elements__card">
         <article className="element">
-          <button className="element__trash-button" type="button"></button>
+          <button className="element__trash-button" type="button" />
           <img className="element__foto" src={props.link} alt={props.name} onClick={handleCardClick} />
           <h2 className="element__title">{props.name}</h2>
-          <button className="element__like" type="button"></button>
+          <button className="element__like" type="button" />
           <span className="element__like-counter">{props.likes.length}</span>
         </article>
       </li>

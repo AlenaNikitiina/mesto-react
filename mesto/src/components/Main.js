@@ -10,10 +10,10 @@ export default function Main (props) {
         <div className="profile__info">
           <h1 className="profile__name titleName">{props.userName}</h1>
           <p className="profile__job titleJob">{props.userDescription}</p>
-          <button className="profile__edit-button" type="button" onClick={props.onEditProfile}></button>
+          <button className="profile__edit-button" type="button" onClick={props.onEditProfile} />
         </div>
       </div>
-        <button className="profile__add-button" type="button" onClick={props.onAddPlace}></button>
+        <button className="profile__add-button" type="button" onClick={props.onAddPlace} />
     </section>
 
     <section className="elements" aria-label="ваши фотографии">

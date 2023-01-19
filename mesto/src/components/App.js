@@ -12,10 +12,9 @@ export default function App () {
   const [isEditAddPlacePopupOpen, setIsEditAddPlacePopupOpen]           = useState (false); // форма доб фотку
   const [isEiditAvatarPopupOpen, setIsEditAvatarPopupOpen]              = useState (false); // форма смена аватара
   const [isWithSubmmitDeletePopupOpen, setIsWithSubmmitDeletePopupOpen] = useState (false); // форма подтверждения удаления карточки
-  const [isCloseAllPopups, setIsCloseAllPopups]                         = useState (true); // закрыть попапы
   const [selectedCard, setSelectedCard]                                 = useState (null); // zoom
 
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({}); // для апи
   const [cards, setCard]        = useState([]);
 
   //
@@ -51,9 +50,16 @@ export default function App () {
   }
 
   function closeAllPopups () {
-    setIsCloseAllPopups (false);
+    setIsEditProfilePopupOpen (false);
+    setIsEditAvatarPopupOpen (false);
+    setIsEditAddPlacePopupOpen (false);
+    setIsWithSubmmitDeletePopupOpen (false);
     setSelectedCard(null);
   }
+
+  const handleOverlayClick = ({ target, currentTarget }) => {
+    if (target === currentTarget) closeAllPopups();
+  };
 
   return (
     <div className="App page">
@@ -77,8 +83,9 @@ export default function App () {
         isOpen={setSelectedCard}>
       </ImagePopup>
 
-      {isEditProfilePopupOpen && isCloseAllPopups && (
-        <PopupWithForm name ="edit" title="Редактировать профиль" isOpen = "popup_opened" onClose={closeAllPopups} >
+      {isEditProfilePopupOpen && closeAllPopups && (
+        <PopupWithForm 
+          name ="edit" title="Редактировать профиль" isOpen = "popup_opened" onClose={closeAllPopups} >
           <input className="form__input popup__input nameInput" id="nickName" type="text" minLength="2" maxLength="40" placeholder="Имя" required/>
           <span className="form__input-error nickName-error"></span>
           <input className="form__input popup__input jobInput" id="about" type="text" minLength="2" maxLength="200" placeholder="О себе" required />
@@ -86,8 +93,9 @@ export default function App () {
         </ PopupWithForm>
       )}
 
-      {isEditAddPlacePopupOpen && isCloseAllPopups && (
-        <PopupWithForm name="add" title="Новое место" isOpen = "popup_opened" onClose={closeAllPopups} >
+      {isEditAddPlacePopupOpen && closeAllPopups && (
+        <PopupWithForm 
+          name="add" title="Новое место" isOpen = "popup_opened" onClose={closeAllPopups} >
           <input className="form__input popup__input titleInput" type="text" id="title" minLength="2" maxLength="30" placeholder="Название" required />
           <span className="form__input-error title-error"></span>
           <input className="form__input popup__input linkInput" type="url" id="link" placeholder="Ссылка на картинку" required/>
@@ -95,15 +103,17 @@ export default function App () {
         </ PopupWithForm>
       )}
 
-      {isEiditAvatarPopupOpen && isCloseAllPopups && (
-        <PopupWithForm name ="change-avatar" title="Обновить аватар" isOpen = "popup_opened" onClose={closeAllPopups} >
+      {isEiditAvatarPopupOpen && closeAllPopups && (
+        <PopupWithForm 
+          name ="change-avatar" title="Обновить аватар" isOpen = "popup_opened" onClose={closeAllPopups} >
           <input className="form__input popup__input linkInput" type="url" id="avatarlink" placeholder="Ссылка на картинку" required/>
           <span className="form__input-error avatarlink-error"></span>
         </ PopupWithForm>
       )}
 
-     {isWithSubmmitDeletePopupOpen && isCloseAllPopups && (
-        <PopupWithForm name="delete-card" title="Вы уверены?" isOpen = "popup_opened" onClose={closeAllPopups} >
+     {isWithSubmmitDeletePopupOpen && closeAllPopups && (
+        <PopupWithForm 
+          name="delete-card" title="Вы уверены?" isOpen = "popup_opened" onClose={closeAllPopups} >
         </ PopupWithForm>
       )}
 
