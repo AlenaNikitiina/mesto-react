@@ -1,22 +1,26 @@
-/** props - пропсы:
- * - card - объект экземпляра карточки
- * - onClickImage - функция обработчик клика по фото
- */
-export default function ({ card, onClickImage }) {
+export default function Card (props) {
 
-  const handleImageClick = () => {onClickImage(card)};
+  function handleCardClick() {
+    props.onCardClick(props.card);
+  } 
 
   return (
-    <li className="card">
-      <button className="button card__buttonDelete" type="button" name="delete"></button>
-      <img src={card.link} alt={card.name} className="card__image" onClick={handleImageClick} />
-      <div className="card__description">
-        <h2 className="card__subtitle">{card.name}</h2>
-        <div className="card__likeContainer">
-          <button className="button card__likeButton" type="button" name="like" aria-label="Like"></button>
-          <span className="card__likeCounter">{card.likes.length}</span>
-        </div>
-      </div>
-    </li>
+    <div className="element-template">
+      <li className="elements__card">
+        <article className="element">
+          <button className="element__trash-button" type="button"></button>
+          <img className="element__foto" src={props.link} alt={props.name} onClick={handleCardClick} />
+          <h2 className="element__title">{props.name}</h2>
+          <button className="element__like" type="button"></button>
+          <span className="element__like-counter">{props.likes.length}</span>
+        </article>
+      </li>
+    </div>
   );
 }
+
+
+
+// тег не работает <template></>
+
+// alt={`изображение: ${card.name}`}

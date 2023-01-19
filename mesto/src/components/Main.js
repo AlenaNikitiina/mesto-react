@@ -1,4 +1,4 @@
-import React from "react";
+import Card from "./Card.js";
 
 export default function Main (props) {
   return (
@@ -15,34 +15,20 @@ export default function Main (props) {
       </div>
         <button className="profile__add-button" type="button" onClick={props.onAddPlace}></button>
     </section>
-  
-    <section className="elements" aria-label="ваши фотографии">
-      <ul className="elements__list">
-      </ul>
-    </section>
-  
-    <template className="element-template">
-      <li className="elements__card">
-        <article className="element">
-          <button className="element__trash-button" type="button"></button>
-          <img className="element__foto" />
-          <h2 className="element__title"></h2>
-          <button className="element__like" type="button"></button>
-          <span className="element__like-counter"></span>
-        </article>
-      </li>
-    </template>
 
+    <section className="elements" aria-label="ваши фотографии">
+        <ul className="elements__list">
+          {props.cards.map(card => {
+            return (
+              <Card 
+              card={card} likes={card.likes} 
+              name={card.name} link={card.link} 
+              key={card._id} onCardClick={props.onCardClick}/>)
+          })}
+        </ul>
+    </section>
+    
   </div>
   </>
   )
 }
-
-
-/*
-    //стейт
-    const [userName, setUserName] =               useState({});
-    const [userDescription, setUserDescription] = useState({});
-    const [userAvatar, setUserAvatar] =           useState({});
-    const [cards, setCard] =                    useState([]);\
-  */

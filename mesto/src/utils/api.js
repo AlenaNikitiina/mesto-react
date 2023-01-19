@@ -1,6 +1,3 @@
-
-
-
 /*
 const apiSettings = {
   url:"https://mesto.nomoreparties.co/v1/cohort-54", // ссылка на бэкенд

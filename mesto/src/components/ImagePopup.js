@@ -1,11 +1,11 @@
-export default function ImagePopup () {
+export default function ImagePopup (props) {
   return (
-    <div className="popup popup_zoom" >
+    <div className={`popup popup_zoom ${props.card && 'popup_opened'}`}>
       <div className="popup__box">
         <figure className="popup__figure">
-          <button className="popup__close-button" onClick={onClose} aria-label="закрыть фотографию" type="button"></button>
-          <img className="popup__image" src={card.link} alt={card.name} />
-          <figcaption className="popup__figcaption">{card.name}</figcaption>
+          <button className="popup__close-button" onClick={props.onClose} aria-label="закрыть фотографию" type="button"></button>
+          <img className="popup__image" src={props.card && props.card.link} alt={`${props.card && props.card.name}`} />
+          <figcaption className="popup__figcaption">{props.card && props.card.name}</figcaption>
         </figure>
       </div>
     </div>
