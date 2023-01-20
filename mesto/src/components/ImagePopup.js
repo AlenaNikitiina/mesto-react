@@ -1,6 +1,6 @@
 export default function ImagePopup (props) {
   return (
-    <div className={`popup popup_zoom ${props.card && 'popup_opened'}`}>
+    <div className={`popup popup_zoom ${props.card && 'popup_opened'}`} onMouseDown={props.onOverlayClick}>
       <div className="popup__box">
         <figure className="popup__figure">
           <button className="popup__close-button" onClick={props.onClose} aria-label="закрыть фотографию" type="button" />

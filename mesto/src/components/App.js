@@ -8,16 +8,19 @@ import api from '../utils/api.js';
 
 
 export default function App () {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen]             = useState (false); // форма поменять имя работу
+  // стейты(переменные) (привязан к одной ф и не выходит за пределы )
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen]             = useState (false); // форма поменять имя работу \ ф-ия юз возвр массив в кот 2 элемента; значение и его сеттер для его изм
   const [isEditAddPlacePopupOpen, setIsEditAddPlacePopupOpen]           = useState (false); // форма доб фотку
   const [isEiditAvatarPopupOpen, setIsEditAvatarPopupOpen]              = useState (false); // форма смена аватара
   const [isWithSubmmitDeletePopupOpen, setIsWithSubmmitDeletePopupOpen] = useState (false); // форма подтверждения удаления карточки
-  const [selectedCard, setSelectedCard]                                 = useState (null); // zoom
+  const [selectedCard, setSelectedCard]                                 = useState (null); // zoom при клике на фото
 
   const [userInfo, setUserInfo] = useState({}); // для апи
   const [cards, setCard]        = useState([]);
 
-  //
+  // ф состоит из колбэка(в кот находится запрос) и массива
+  //(он не обязан-й, но без будет на любое нажатие вызываться useEffect. А с пустым массивом ток один раз при загрузке отработает)
+  // а если положить конкретный is... будет следить за ним [isEditProfilePopupOpen] и перерис
   useEffect(() => {
     Promise.all([ api.getUserInfo(), api.getInitialCards() ])
       .then(( [data, cards] ) => {
@@ -34,19 +37,24 @@ export default function App () {
   }
 
   function handleEditProfileClick () {
-    setIsEditProfilePopupOpen (true)
+    setIsEditProfilePopupOpen (true) // при этом перерисуется
   }
 
   function handleAddPlaceClick () {
     setIsEditAddPlacePopupOpen (true)
   }
 
-  function handleWithSubmmitDeleteClick () {
-    setIsWithSubmmitDeletePopupOpen (true)
-  }
+  //function handleWithSubmmitDeleteClick () {
+    //setIsWithSubmmitDeletePopupOpen (true)}
  
   function handleCardClick(card) {
     setSelectedCard(card);
+  }
+
+  function handleOverlayClick (evt) {
+    if (evt.target.classList.contains('popup_opened')) {
+      closeAllPopups();
+    }
   }
 
   function closeAllPopups () {
@@ -57,19 +65,16 @@ export default function App () {
     setSelectedCard(null);
   }
 
-  const handleOverlayClick = ({ target, currentTarget }) => {
-    if (target === currentTarget) closeAllPopups();
-  };
 
   return (
     <div className="App page">
       <Header />
       <Main 
-        onEditAvatar = {handleEditAvatarClick} 
-        onEditProfile = {handleEditProfileClick}
-        onAddPlace = {handleAddPlaceClick} 
-        onSubmitDelete = {handleWithSubmmitDeleteClick}
-        onCardClick={handleCardClick}
+        handleEditAvatarClick = {handleEditAvatarClick} // передаем через пропс ф-ии, лучше одинаковые
+        handleEditProfileClick = {handleEditProfileClick}
+        handleAddPlaceClick = {handleAddPlaceClick} 
+        //handleWithSubmmitDeleteClick = {handleWithSubmmitDeleteClick}
+        onCardClick={handleCardClick} // zoom f
 
         userName = {userInfo.name}
         userDescription = {userInfo.about}
@@ -80,40 +85,45 @@ export default function App () {
       <ImagePopup
         card={selectedCard}
         onClose={closeAllPopups}
-        isOpen={setSelectedCard}>
+        isOpen={setSelectedCard}
+        onOverlayClick={handleOverlayClick}>
       </ImagePopup>
 
       {isEditProfilePopupOpen && closeAllPopups && (
         <PopupWithForm 
-          name ="edit" title="Редактировать профиль" isOpen = "popup_opened" onClose={closeAllPopups} >
-          <input className="form__input popup__input nameInput" id="nickName" type="text" minLength="2" maxLength="40" placeholder="Имя" required/>
-          <span className="form__input-error nickName-error"></span>
-          <input className="form__input popup__input jobInput" id="about" type="text" minLength="2" maxLength="200" placeholder="О себе" required />
-          <span className="form__input-error about-error"></span>
+          name ="edit" title="Редактировать профиль" 
+          isOpen = "popup_opened" onClose={closeAllPopups} onOverlayClick={handleOverlayClick} >
+            <input className="form__input popup__input nameInput" id="nickName" type="text" minLength="2" maxLength="40" placeholder="Имя" required/>
+            <span className="form__input-error nickName-error"></span>
+            <input className="form__input popup__input jobInput" id="about" type="text" minLength="2" maxLength="200" placeholder="О себе" required />
+            <span className="form__input-error about-error"></span>
         </ PopupWithForm>
       )}
 
       {isEditAddPlacePopupOpen && closeAllPopups && (
         <PopupWithForm 
-          name="add" title="Новое место" isOpen = "popup_opened" onClose={closeAllPopups} >
-          <input className="form__input popup__input titleInput" type="text" id="title" minLength="2" maxLength="30" placeholder="Название" required />
-          <span className="form__input-error title-error"></span>
-          <input className="form__input popup__input linkInput" type="url" id="link" placeholder="Ссылка на картинку" required/>
-          <span className="form__input-error link-error"></span>
+          name="add" title="Новое место" 
+          isOpen = "popup_opened" onClose={closeAllPopups} onOverlayClick={handleOverlayClick}>
+            <input className="form__input popup__input titleInput" type="text" id="title" minLength="2" maxLength="30" placeholder="Название" required />
+            <span className="form__input-error title-error"></span>
+            <input className="form__input popup__input linkInput" type="url" id="link" placeholder="Ссылка на картинку" required/>
+            <span className="form__input-error link-error"></span>
         </ PopupWithForm>
       )}
 
       {isEiditAvatarPopupOpen && closeAllPopups && (
         <PopupWithForm 
-          name ="change-avatar" title="Обновить аватар" isOpen = "popup_opened" onClose={closeAllPopups} >
-          <input className="form__input popup__input linkInput" type="url" id="avatarlink" placeholder="Ссылка на картинку" required/>
-          <span className="form__input-error avatarlink-error"></span>
+          name ="change-avatar" title="Обновить аватар" 
+          isOpen = "popup_opened" onClose={closeAllPopups} onOverlayClick={handleOverlayClick}>
+            <input className="form__input popup__input linkInput" type="url" id="avatarlink" placeholder="Ссылка на картинку" required/>
+            <span className="form__input-error avatarlink-error"></span>
         </ PopupWithForm>
       )}
 
      {isWithSubmmitDeletePopupOpen && closeAllPopups && (
         <PopupWithForm 
-          name="delete-card" title="Вы уверены?" isOpen = "popup_opened" onClose={closeAllPopups} >
+          name="delete-card" title="Вы уверены?" 
+          isOpen = "popup_opened" onClose={closeAllPopups} onOverlayClick={handleOverlayClick}>
         </ PopupWithForm>
       )}
 
@@ -131,4 +141,5 @@ export default function App () {
   };
 
   onOverlayClick={handleOverlayClick}
+  handleOverlayClick={handleOverlayClick}
 */
