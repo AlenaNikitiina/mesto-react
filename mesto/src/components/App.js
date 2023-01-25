@@ -1,14 +1,16 @@
 import {useEffect, useState} from "react";
 import Header from './Header';
 import Main from './Main';
-import ImagePopup from './ImagePopup.js';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
+import ImagePopup from './ImagePopup.js';
 import api from '../utils/api.js';
+import {CurrentUserContext} from '../contexts/CurrentUserContext.js'
+//import {currentUser}
 
 
 export default function App () {
-  // стейты(переменные) (привязан к одной ф и не выходит за пределы )
+  // стейты(переменные) (привязан к одной ф и не выходит за пределы, выше)
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen]             = useState (false); // форма поменять имя работу \ ф-ия юз возвр массив в кот 2 элемента; текущие значение и ф-ия сеттер для его изм
   const [isEditAddPlacePopupOpen, setIsEditAddPlacePopupOpen]           = useState (false); // форма доб фотку
   const [isEiditAvatarPopupOpen, setIsEditAvatarPopupOpen]              = useState (false); // форма смена аватара
@@ -16,7 +18,8 @@ export default function App () {
   const [selectedCard, setSelectedCard]                                 = useState (null); // zoom при клике на фото
 
   const [userInfo, setUserInfo] = useState({}); // для апи
-  const [cards, setCard]        = useState([]);
+  const [cards, setCard]        = useState([]); // для апи
+  const [currentUser, setCurrentUser] = useState({}) // переменную состояния currentUser
 
   // ф состоит из колбэка(в кот находится запрос) и массива
   //(он не обязан-й, но без будет на любое нажатие вызываться useEffect. А с пустым массивом ток один раз при загрузке отработает)
@@ -67,6 +70,7 @@ export default function App () {
 
 
   return (
+  <CurrentUserContext.Provider value={currentUser}>
     <div className="App page">
       <Header />
       <Main 
@@ -76,9 +80,9 @@ export default function App () {
         //handleWithSubmmitDeleteClick = {handleWithSubmmitDeleteClick}
         onCardClick={handleCardClick} // zoom f
 
-        userName = {userInfo.name}
-        userDescription = {userInfo.about}
-        userAvatar = {userInfo.avatar}
+        //userName = {userInfo.name} dont need
+        //userDescription = {userInfo.about}
+        //userAvatar = {userInfo.avatar}
         cards = {cards}
       />
       <Footer />
@@ -128,6 +132,7 @@ export default function App () {
       )}
 
     </div>
+  </CurrentUserContext.Provider>
   )
 
 }
