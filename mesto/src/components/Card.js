@@ -1,6 +1,6 @@
 export default function Card (props) {
 
-  function handleCardClick() {
+  function handleCardClickZoom() {
     props.onCardClick(props.card);
   } 
 
@@ -9,7 +9,7 @@ export default function Card (props) {
       <li className="elements__card">
         <article className="element">
           <button className="element__trash-button" type="button" />
-          <img className="element__foto" src={props.link}  alt={`изображение: ${props.name}`} onClick={handleCardClick} />
+          <img className="element__foto" src={props.link}  alt={`изображение: ${props.name}`} onClick={handleCardClickZoom} />
           <h2 className="element__title">{props.name}</h2>
           <button className="element__like" type="button" />
           <span className="element__like-counter">{props.likes.length}</span>

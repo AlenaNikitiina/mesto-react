@@ -32,3 +32,5 @@ export default function Main (props) {
   </>
   )
 }
+
+// компонент это ф кот возвр джсх разметку

@@ -9,7 +9,7 @@ import api from '../utils/api.js';
 
 export default function App () {
   // стейты(переменные) (привязан к одной ф и не выходит за пределы )
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen]             = useState (false); // форма поменять имя работу \ ф-ия юз возвр массив в кот 2 элемента; значение и его сеттер для его изм
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen]             = useState (false); // форма поменять имя работу \ ф-ия юз возвр массив в кот 2 элемента; текущие значение и ф-ия сеттер для его изм
   const [isEditAddPlacePopupOpen, setIsEditAddPlacePopupOpen]           = useState (false); // форма доб фотку
   const [isEiditAvatarPopupOpen, setIsEditAvatarPopupOpen]              = useState (false); // форма смена аватара
   const [isWithSubmmitDeletePopupOpen, setIsWithSubmmitDeletePopupOpen] = useState (false); // форма подтверждения удаления карточки
@@ -62,7 +62,7 @@ export default function App () {
     setIsEditAvatarPopupOpen (false);
     setIsEditAddPlacePopupOpen (false);
     setIsWithSubmmitDeletePopupOpen (false);
-    setSelectedCard(null);
+    setSelectedCard (null);
   }
 
 
@@ -132,14 +132,3 @@ export default function App () {
 
 }
 
-
-
-
-/* 
-  const handleOverlayClick = ({ target, currentTarget }) => {
-    if (target === currentTarget) closeAllPopups();
-  };
-
-  onOverlayClick={handleOverlayClick}
-  handleOverlayClick={handleOverlayClick}
-*/

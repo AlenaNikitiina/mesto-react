@@ -16,6 +16,6 @@ root.render (
 /*
 ReactDOM.render(
   (<div>
-  <h2>Грустные факты о животных</h2>
-</div>
+    <h2>Грустные факты о животных</h2>
+  </div>
 ), document.querySelector('#root'));*/

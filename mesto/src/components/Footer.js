@@ -1,7 +1,7 @@
 function Footer () {
   return (
     <footer className="footer">
-      <p className="footer__copyright">© 2023 Alena Nikitina</p>
+      <p className="footer__copyright">© {new Data().getFullYear()} Alena Nikitina</p>
     </footer>
   )
 }
