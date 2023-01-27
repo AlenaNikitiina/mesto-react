@@ -14,8 +14,7 @@ export default function Main (props) {
           <img className="profile__avatar" src={currentUser.avatar} alt="Ваш аватар" onClick={props.handleEditAvatarClick} />
           <div className="profile__info">
             <h1 className="profile__name titleName">{currentUser.name}</h1>
-            <p className="profile__job titleJob">{currentUser.about} console.log({currentUser.about})</p>
-            console.log('sdvfsdff')
+            <p className="profile__job titleJob">{currentUser.about}</p>
             <button className="profile__edit-button" type="button" onClick={props.handleEditProfileClick} />
           </div>
         </div>
@@ -27,9 +26,10 @@ export default function Main (props) {
             {props.cards.map(card => {
               return (
                 <Card 
-                  card={card}        key={card._id}
-                  name={card.name}   link={card.link} 
-                  likes={card.likes} onCardClick={props.onCardClick}/>)
+                  card={card}         key={card._id}
+                  name={card.name}    link={card.link} 
+                  likes={card.likes}  onCardClick={props.onCardClick} 
+                  onCardLike={props.onCardLike} />)
             })}
           </ul>
       </section>
