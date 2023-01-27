@@ -11,11 +11,11 @@ export default function PopupWithSubmmitDelete (props) {
 
   return (
     <PopupWithForm 
-      name="delete-card" title="Вы уверены?" 
+      name="delete-card"
+      title="Вы уверены?" 
       isOpen={props.isOpen}
       onClose={props.onClose}
       onOverlayClick={props.handleOverlayClick}
-      //onSubmit={handleSubmit}
       >
         <button className="popup__close-button" 
         type="button"

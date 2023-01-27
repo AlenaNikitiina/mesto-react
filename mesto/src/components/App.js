@@ -10,7 +10,6 @@ import EditProfilePopup from "./EditProfilePopup";
 import PopupWithSubmmitDelete from "./PopupWithSubmmitDelete";
 
 
-
 export default function App () {
   // стейты(переменные) (привязан к одной ф и не выходит за пределы, выше)
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen]             = useState (false); // форма поменять имя работу \ ф-ия юз возвр массив в кот 2 элемента; текущие значение и ф-ия сеттер для его изм
@@ -18,7 +17,7 @@ export default function App () {
   const [isEiditAvatarPopupOpen, setIsEditAvatarPopupOpen]              = useState (false); // форма смена аватара
   const [isWithSubmmitDeletePopupOpen, setIsWithSubmmitDeletePopupOpen] = useState (false); // форма подтверждения удаления карточки
   const [selectedCard, setSelectedCard]                                 = useState (null);  // zoom при клике на фото
-  const [deletingCard, setDeletingCard] = useState(null)
+  const [deletingCard, setDeletingCard] = useState(null) // 
 
   const [cards, setCard]              = useState([]); // для апи
   const [currentUser, setCurrentUser] = useState({}) // переменную состояния currentUser
@@ -168,13 +167,13 @@ export default function App () {
     <div className="App page">
       <Header />
       <Main 
-        handleEditAvatarClick = {handleEditAvatarClick} // передаем через пропс ф-ии, лучше одинаковые
+        handleEditAvatarClick = {handleEditAvatarClick}   // передаем через пропс ф-ии, лучше одинаковые
         handleEditProfileClick = {handleEditProfileClick} // поппап редактирования
-        handleAddPlaceClick = {handleAddPlaceClick} // попап доб нов карточку
+        handleAddPlaceClick = {handleAddPlaceClick}       // попап доб нов карточку
         onCardClick={handleCardClick} // zoom f
 
         cards = {cards}
-        onClickDeleteCard={handleConfimDeleteCard} // удалить карточку onClickDeleteCard
+        onClickDeleteCard={handleConfimDeleteCard} // удалить карточку
         onCardLike={handlePutLike} // лайк
       />
       <Footer />
@@ -214,7 +213,7 @@ export default function App () {
         </ PopupWithForm>
       )}
 
-     <PopupWithSubmmitDelete 
+     <PopupWithSubmmitDelete
         isOpen ={isWithSubmmitDeletePopupOpen}
         onClose={closeAllPopups}
         onConfirmDelete={handleCardDelete}
