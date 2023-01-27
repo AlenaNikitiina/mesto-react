@@ -1,10 +1,11 @@
 import Card from "./Card.js";
 import React from "react";
 import {CurrentUserContext} from "../contexts/CurrentUserContext.js";
+import { useContext } from "react";
 
 
 export default function Main (props) {
-  const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
 
   return (
   <>
@@ -29,7 +30,9 @@ export default function Main (props) {
                   card={card}         key={card._id}
                   name={card.name}    link={card.link} 
                   likes={card.likes}  onCardClick={props.onCardClick} 
-                  onCardLike={props.onCardLike} />)
+                  onCardLike={props.onCardLike}
+                  onClickDeleteCard={props.onClickDeleteCard}
+                  />)
             })}
           </ul>
       </section>

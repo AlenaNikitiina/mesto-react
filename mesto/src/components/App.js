@@ -7,6 +7,7 @@ import ImagePopup from './ImagePopup.js';
 import api from '../utils/api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js'
 import EditProfilePopup from "./EditProfilePopup";
+import PopupWithSubmmitDelete from "./PopupWithSubmmitDelete";
 
 
 
@@ -16,20 +17,21 @@ export default function App () {
   const [isEditAddPlacePopupOpen, setIsEditAddPlacePopupOpen]           = useState (false); // форма доб фотку
   const [isEiditAvatarPopupOpen, setIsEditAvatarPopupOpen]              = useState (false); // форма смена аватара
   const [isWithSubmmitDeletePopupOpen, setIsWithSubmmitDeletePopupOpen] = useState (false); // форма подтверждения удаления карточки
-  const [selectedCard, setSelectedCard]                                 = useState (null); // zoom при клике на фото
+  const [selectedCard, setSelectedCard]                                 = useState (null);  // zoom при клике на фото
+  const [deletingCard, setDeletingCard] = useState(null)
 
-  //const [userInfo, setUserInfo] = useState({}); // для апи dont need
   const [cards, setCard]              = useState([]); // для апи
   const [currentUser, setCurrentUser] = useState({}) // переменную состояния currentUser
   const [isLoading, setIsLoading]     = useState(false) // идет сохранение загрузка
 
   // ф состоит из колбэка(в кот находится запрос) и массива
   //(он не обязан-й, но без будет на любое нажатие вызываться useEffect. А с пустым массивом ток один раз при загрузке отработает)
-  // а если положить конкретный is... будет следить за ним [isEditProfilePopupOpen] и перерис
+  // а если положить конкретный is... будет следить за ним [isEditProfilePopupOpe] и перерис
+
+  // от сервера получили данные о юзере и карточки
   useEffect(() => {
     Promise.all([ api.getUserInfo(), api.getInitialCards() ])
       .then(( [data, cards] ) => {
-        //setUserInfo (data);
         setCurrentUser (data);
         setCard (cards);
       })
@@ -43,25 +45,8 @@ export default function App () {
     setIsEditAvatarPopupOpen (true)
   }
 
-/*
 
-// 3 редактирования профиля
-function handlerSubmitProfile(value) {
-  setIsLoading(true);
-  api.editingProfile (value.name, value.about) // м из апи - изм имя, работу и сохранить
-    .then((result) => {
-      setCurrentUser(result.name, result.about, result.avatar); // вызвали М из UserInfo кот принимает новые данные чела и добавляет их на страницу
-      closeAllPopups();
-    })
-    .catch(err => {
-      console.log("Не получилось изменить данные: ", err);
-    })
-    .finally(() => {
-      setIsLoading(false);
-    })
-}
-
-/*
+  /*
   // 6 меняем аватар
   function handleChangeAvatar (value) {
   setIsLoading(true);
@@ -76,10 +61,10 @@ function handlerSubmitProfile(value) {
   .finally(() => {
     setIsLoading(false);
   })
-}
+  }
 
-handleChangeAvatar={handleChangeAvatar}
-*/
+  handleChangeAvatar={handleChangeAvatar}
+  */
 
 
   function handleEditProfileClick () {
@@ -93,7 +78,7 @@ handleChangeAvatar={handleChangeAvatar}
  // удалить карточку
   function handleConfimDeleteCard (card) {
     setIsWithSubmmitDeletePopupOpen (true);
-    setSelectedCard(card);
+    setDeletingCard(card);
   }
  
   // для zoom
@@ -101,6 +86,7 @@ handleChangeAvatar={handleChangeAvatar}
     setSelectedCard(card);
   }
 
+  //клик на оверлэй
   function handleOverlayClick (evt) {
     if (evt.target.classList.contains('popup_opened')) {
       closeAllPopups();
@@ -113,12 +99,13 @@ handleChangeAvatar={handleChangeAvatar}
     setIsEditAddPlacePopupOpen (false);
     setIsWithSubmmitDeletePopupOpen (false);
     setSelectedCard (null);
+    setDeletingCard(null);
   }
 
-  // from EditProfilePopup обработчика 
-  function handleUpdateUser (userData) {
+  // обработчик изменения данных пользователя. имя работа. from EditProfilePopup
+  function handleUpdateUser ({name, about}) {
     setIsLoading(true);
-    api.setUserInfo (userData)
+    api.setUserInfo (name, about)
       .then ((newUserData) => {
         setCurrentUser(newUserData); // обновили
         closeAllPopups();
@@ -158,26 +145,44 @@ handleChangeAvatar={handleChangeAvatar}
     }
   }
 
+  
+  // удалить карточку 
+  function handleCardDelete(card) {
+    setIsLoading(true); 
+      api.removeCard(card._id)
+        .then(() => {
+          setCard((cards) => cards.filter((c) => c._id !== card._id));
+          closeAllPopups();
+        })
+        .catch((err) => {
+          console.log("Ошибка при удалении карточки: ", err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        })
+  }
+
+
   return (
   <CurrentUserContext.Provider value={currentUser}>
     <div className="App page">
       <Header />
       <Main 
         handleEditAvatarClick = {handleEditAvatarClick} // передаем через пропс ф-ии, лучше одинаковые
-        handleEditProfileClick = {handleEditProfileClick} // поппапы
-        handleAddPlaceClick = {handleAddPlaceClick} 
+        handleEditProfileClick = {handleEditProfileClick} // поппап редактирования
+        handleAddPlaceClick = {handleAddPlaceClick} // попап доб нов карточку
         onCardClick={handleCardClick} // zoom f
 
         cards = {cards}
-        onClickDeleteCard={handleConfimDeleteCard} // удалить карточку
+        onClickDeleteCard={handleConfimDeleteCard} // удалить карточку onClickDeleteCard
         onCardLike={handlePutLike} // лайк
       />
       <Footer />
 
       <ImagePopup
         card={selectedCard}
-        onClose={closeAllPopups}
         isOpen={setSelectedCard}
+        onClose={closeAllPopups}
         onOverlayClick={handleOverlayClick} >
       </ImagePopup>
 
@@ -185,6 +190,7 @@ handleChangeAvatar={handleChangeAvatar}
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
         onUpdateUser={handleUpdateUser}
+        onOverlayClick={handleOverlayClick}
         isLoading={isLoading}
       />
 
@@ -208,12 +214,14 @@ handleChangeAvatar={handleChangeAvatar}
         </ PopupWithForm>
       )}
 
-     {isWithSubmmitDeletePopupOpen && closeAllPopups && (
-        <PopupWithForm 
-          name="delete-card" title="Вы уверены?" 
-          isOpen = "popup_opened" onClose={closeAllPopups} onOverlayClick={handleOverlayClick}>
-        </ PopupWithForm>
-      )}
+     <PopupWithSubmmitDelete 
+        isOpen ={isWithSubmmitDeletePopupOpen}
+        onClose={closeAllPopups}
+        onConfirmDelete={handleCardDelete}
+        onOverlayClick={handleOverlayClick}
+        isLoading={isLoading}
+        currentCard={deletingCard}
+      />
 
     </div>
   </CurrentUserContext.Provider>
@@ -221,5 +229,3 @@ handleChangeAvatar={handleChangeAvatar}
 
 }
 
-
-//<EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />

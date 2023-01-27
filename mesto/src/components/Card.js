@@ -1,9 +1,10 @@
 import React from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { useContext } from "react";
 
 
 export default function Card (props) {
-  const currentUser = React.createContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
   
   const isOwn = props.card.owner._id === currentUser._id; // мы ли владельцы текущей карточки ?
 
@@ -23,15 +24,14 @@ export default function Card (props) {
 
   // удалить карточку
   function handleDeleteClick() {
-    props.onClickDeleteCard(props.card);
+    props.onClickDeleteCard(props.card); // обработчик в кот мы вызывваем ф из пропсов, передаем в него карточку
   }
 
   return (
     <div className="element-template">
       <li className="elements__card">
         <article className="element">
-          {isOwn && (
-            <button 
+          {isOwn && ( <button 
               className="element__trash-button" 
               type="button" 
               aria-label="удалить карточку"
@@ -56,8 +56,7 @@ export default function Card (props) {
 }
 
 
-// <button className="element__like cardLikeButton" ,.????????????????????????????
-
 // тег <template></> не работает
 // isOwn Далее в разметке используем переменную для условного рендеринга
+
 // alt={`изображение: ${card.name}`}  /  {props.name}

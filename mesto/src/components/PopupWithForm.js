@@ -1,6 +1,6 @@
-export default function PopupWithForm (props) {
+export default function PopupWithForm (props, popup_opened) {
   return (
-    <div className={`popup popup_${props.name} ${props.isOpen} popup_edit popup_add popup_change-avatar`} onMouseDown={props.onOverlayClick} >
+    <div className={`popup popup_${props.name} ${props.isOpen ? popup_opened : ""}  popup_edit popup_add popup_change-avatar popup_delete-card`} onMouseDown={props.onOverlayClick} >
       <div className="popup__container form">
         <button className="popup__close-button" type="button" onClick={props.onClose} />
         <h3 className="popup__title">{`${props.title}`}</h3>
@@ -13,3 +13,6 @@ export default function PopupWithForm (props) {
     </div>
   )
 }
+
+
+///${props.isOpen ? popup_opened : ""}
