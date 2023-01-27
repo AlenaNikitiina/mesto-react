@@ -1,3 +1,5 @@
+import React from "react"
+
 export default function PopupWithForm (props, popup_opened) {
   return (
     <div className={`popup popup_${props.name} ${props.isOpen ? popup_opened : ""}  popup_edit popup_add popup_change-avatar popup_delete-card`} onMouseDown={props.onOverlayClick} >

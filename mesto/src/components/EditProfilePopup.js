@@ -3,6 +3,7 @@ import PopupWithForm from "./PopupWithForm";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import {CurrentUserContext} from '../contexts/CurrentUserContext.js'
+import { useRef } from "react";
 
 
 export default function EditProfilePopup (props) {
@@ -10,23 +11,24 @@ export default function EditProfilePopup (props) {
 
   const [name, setName]               = useState(''); // Стейт, в котором содержится значение инпута
   const [description, setDescription] = useState('');
-  //const nameRef        = React.useRef();
-  //const descriptionRef = React.useRef();
+  //const nameRef        = useRef();
+  //const descriptionRef = useRef();
 
-  /*
+  
   // После загрузки текущего пользователя из API его данные будут использованы в управляемых компонентах.
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
   }, [currentUser] ); 
-*/
+  
+/*
 useEffect(() => { 
   if (props.isOpen) { 
     setName(currentUser.name); 
     setDescription(currentUser.about); 
   } 
 }, [props.isOpen, currentUser]);
-
+  */
 
   // отправка формы ?
   function handleSubmit (e) {

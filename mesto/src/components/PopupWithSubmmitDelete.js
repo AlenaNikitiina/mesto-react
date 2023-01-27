@@ -16,11 +16,8 @@ export default function PopupWithSubmmitDelete (props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       onOverlayClick={props.handleOverlayClick}
+      onClick={handleSubmit}
       >
-        <button className="popup__close-button" 
-        type="button"
-        onClick={handleSubmit}
-        />
   </ PopupWithForm>
   )
 

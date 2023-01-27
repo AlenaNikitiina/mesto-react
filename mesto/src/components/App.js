@@ -8,6 +8,7 @@ import api from '../utils/api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js'
 import EditProfilePopup from "./EditProfilePopup";
 import PopupWithSubmmitDelete from "./PopupWithSubmmitDelete";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 
 export default function App () {
@@ -37,21 +38,19 @@ export default function App () {
       .catch((err) => {
         console.log(`Ошибка в процессе загрузки данных пользователя и галереи: ${err}`);
       })
-    }, [])
-  
+  }, [] )
 
+  //
   function handleEditAvatarClick () {
     setIsEditAvatarPopupOpen (true)
   }
-
-
-  /*
+  
   // 6 меняем аватар
-  function handleChangeAvatar (value) {
+  function handleUpdateAvatar (data) {
   setIsLoading(true);
-  api.updateAvatar(value)
-    .then((result) => {
-      setCurrentUser(result.avatar);
+  api.updateAvatar(data)
+    .then((newavatar) => {
+      setCurrentUser(newavatar);
       closeAllPopups();
   })
   .catch(err => {
@@ -61,9 +60,6 @@ export default function App () {
     setIsLoading(false);
   })
   }
-
-  handleChangeAvatar={handleChangeAvatar}
-  */
 
 
   function handleEditProfileClick () {
@@ -144,13 +140,13 @@ export default function App () {
     }
   }
 
-  
   // удалить карточку 
   function handleCardDelete(card) {
     setIsLoading(true); 
       api.removeCard(card._id)
         .then(() => {
           setCard((cards) => cards.filter((c) => c._id !== card._id));
+          console.log(setCard)
           closeAllPopups();
         })
         .catch((err) => {
@@ -204,14 +200,12 @@ export default function App () {
         </ PopupWithForm>
       )}
 
-      {isEiditAvatarPopupOpen && closeAllPopups && (
-        <PopupWithForm 
-          name ="change-avatar" title="Обновить аватар" 
-          isOpen = "popup_opened" onClose={closeAllPopups} onOverlayClick={handleOverlayClick} >
-            <input className="form__input popup__input linkInput" type="url" id="avatarlink" placeholder="Ссылка на картинку" required/>
-            <span className="form__input-error avatarlink-error"></span>
-        </ PopupWithForm>
-      )}
+      <EditAvatarPopup
+        isOpen={isEiditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        onUpdateAvatar={handleUpdateAvatar}
+        isLoading={isLoading}
+      />
 
      <PopupWithSubmmitDelete
         isOpen ={isWithSubmmitDeletePopupOpen}
