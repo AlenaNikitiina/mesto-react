@@ -4,13 +4,15 @@ import { useRef } from "react";
 
 export default function EditAvatarPopup (props) {
 
-  const avatarRef = useRef('');
-
+  const avatarRef = useRef();
+  
+  ////* Значение инпута, полученное с помощью рефа */,
   function handleSubmit(evt) {
+  
     evt.preventDefault();
-    props.onUpdateAvatar({
-      //avatar: avatarRef /* Значение инпута, полученное с помощью рефа */,
-    });
+    console.log("11111", avatarRef.current)
+    props.onUpdateAvatar(avatarRef.current.value);
+    avatarRef.current.value=""
   }
 
 
@@ -24,7 +26,6 @@ export default function EditAvatarPopup (props) {
     >
       <input
         ref={avatarRef}
-        //value={avatar}
         className="form__input popup__input linkInput" type="url" id="avatarlink" placeholder="Ссылка на картинку" required
       />
       <span className="form__input-error avatarlink-error"></span>

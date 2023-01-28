@@ -18,9 +18,9 @@ export default function App () {
   const [isEiditAvatarPopupOpen, setIsEditAvatarPopupOpen]              = useState (false); // форма смена аватара
   const [isWithSubmmitDeletePopupOpen, setIsWithSubmmitDeletePopupOpen] = useState (false); // форма подтверждения удаления карточки
   const [selectedCard, setSelectedCard]                                 = useState (null);  // zoom при клике на фото
-  const [deletingCard, setDeletingCard] = useState(null) // 
+  const [deletingCard, setDeletingCard]                                 = useState(null) // 
 
-  const [cards, setCard]              = useState([]); // для апи
+  const [cards, setCard]              = useState([]); // для апи ssss
   const [currentUser, setCurrentUser] = useState({}) // переменную состояния currentUser
   const [isLoading, setIsLoading]     = useState(false) // идет сохранение загрузка
 
@@ -63,6 +63,7 @@ export default function App () {
 
 
   function handleEditProfileClick () {
+    //console.log(11111111111)
     setIsEditProfilePopupOpen (true) // при этом перерисуется
   }
 
@@ -97,10 +98,14 @@ export default function App () {
     setDeletingCard(null);
   }
 
+
+
+  
+  //const [userInfo, setUserInfo] = useState({}); // для апи
   // обработчик изменения данных пользователя. имя работа. from EditProfilePopup
-  function handleUpdateUser ({name, about}) {
+  function handleUpdateUser(name, about) {
     setIsLoading(true);
-    api.setUserInfo (name, about)
+    api.editingProfile(name, about)
       .then ((newUserData) => {
         setCurrentUser(newUserData); // обновили
         closeAllPopups();
@@ -146,7 +151,7 @@ export default function App () {
       api.removeCard(card._id)
         .then(() => {
           setCard((cards) => cards.filter((c) => c._id !== card._id));
-          console.log(setCard)
+          //console.log(setCard)
           closeAllPopups();
         })
         .catch((err) => {
@@ -171,6 +176,8 @@ export default function App () {
         cards = {cards}
         onClickDeleteCard={handleConfimDeleteCard} // удалить карточку
         onCardLike={handlePutLike} // лайк
+
+
       />
       <Footer />
 

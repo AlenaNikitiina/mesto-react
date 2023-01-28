@@ -74,7 +74,7 @@ class Api {
   };
 
   // 6 Поменять аватар
-  updateAvatar (avatarLink) { //ссылка на нов аватар
+  updateAvatar (avatarLink) { //ссылка на нов аватар принимает строку
     return fetch(this._url + `/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
