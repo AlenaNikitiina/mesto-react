@@ -1,37 +1,25 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
-export default function PopupWithSubmmitDelete (props) {
+export default function PopupWithSubmmitDelete ( {currentCard, handleOverlayClick, onConfirmDelete, renderLoading, isOpen, onClose} ) {
   
   // обработчик удаления карточки, в кот вызвали ф из пропсов
   function handleSubmit (e) {
     e.preventDefault();
-    props.onConfirmDelete(props.currentCard);
+    onConfirmDelete(currentCard);
   }
 
   return (
     <PopupWithForm 
       name="delete-card"
-      title="Вы уверены?" 
-      isOpen={props.isOpen}
-      onClose={props.onClose}
-      onOverlayClick={props.handleOverlayClick}
-      //onClick={handleSubmit}
+      title="Вы уверены?"
+      isOpen={isOpen}
+      onClose={onClose}
+      onOverlayClick={handleOverlayClick}
       onSubmit={handleSubmit}
-      >
-  </ PopupWithForm>
+      renderLoading={renderLoading}
+    >
+    </ PopupWithForm>
   )
 
 }
-
-/*
-<div class="popup popup_delete-card">
-<div class="popup__container form">
-  <form action="#" class="popup__form" id="delete-card">
-    <button class="popup__close-button" type="button"></button>
-    <h3 class="popup__title">Вы уверены?</h3>
-    <button class="popup__save-button popup__button form__submit" name="delete-card" type="submit">Да</button>
-  </form>
-</div>
-</div>
-*/

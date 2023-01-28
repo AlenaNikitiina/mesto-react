@@ -22,8 +22,8 @@ export default function App () {
 
   const [cards, setCard]              = useState([]); // для апи ssss
   const [currentUser, setCurrentUser] = useState({}) // переменную состояния currentUser
-  const [isLoading, setIsLoading]     = useState(false) // идет сохранение загрузка
-
+  //const [isLoading, setIsLoading]     = useState(false) // идет сохранение загрузка
+  const [renderLoading, setRenderLoading] =useState(false)
   // ф состоит из колбэка(в кот находится запрос) и массива
   //(он не обязан-й, но без будет на любое нажатие вызываться useEffect. А с пустым массивом ток один раз при загрузке отработает)
   // а если положить конкретный is... будет следить за ним [isEditProfilePopupOpe] и перерис
@@ -47,7 +47,7 @@ export default function App () {
   
   // 6 меняем аватар
   function handleUpdateAvatar (data) {
-  setIsLoading(true);
+  setRenderLoading(true);
   api.updateAvatar(data)
     .then((newavatar) => {
       setCurrentUser(newavatar);
@@ -57,7 +57,7 @@ export default function App () {
     console.log("Не получилось обновить аватар: ", err);
   })
   .finally(() => {
-    setIsLoading(false);
+    setRenderLoading(false);
   })
   }
 
@@ -104,7 +104,7 @@ export default function App () {
   //const [userInfo, setUserInfo] = useState({}); // для апи
   // обработчик изменения данных пользователя. имя работа. from EditProfilePopup
   function handleUpdateUser(name, about) {
-    setIsLoading(true);
+    setRenderLoading(true);
     api.editingProfile(name, about)
       .then ((newUserData) => {
         setCurrentUser(newUserData); // обновили
@@ -114,7 +114,7 @@ export default function App () {
         console.log("Не получилось изменить данные: ", err);
       })
       .finally(() => {
-        setIsLoading(false);
+        setRenderLoading(false);
       })
   }
 
@@ -147,7 +147,7 @@ export default function App () {
 
   // удалить карточку 
   function handleCardDelete(card) {
-    setIsLoading(true); 
+    setRenderLoading(true); 
       api.removeCard(card._id)
         .then(() => {
           setCard((cards) => cards.filter((c) => c._id !== card._id));
@@ -158,7 +158,7 @@ export default function App () {
           console.log("Ошибка при удалении карточки: ", err);
         })
         .finally(() => {
-          setIsLoading(false);
+          setRenderLoading(false);
         })
   }
 
@@ -172,6 +172,7 @@ export default function App () {
         handleEditProfileClick = {handleEditProfileClick} // поппап редактирования
         handleAddPlaceClick = {handleAddPlaceClick}       // попап доб нов карточку
         onCardClick={handleCardClick} // zoom f
+        //handleCardClick={handleCardClick}
 
         cards = {cards}
         onClickDeleteCard={handleConfimDeleteCard} // удалить карточку
@@ -193,7 +194,7 @@ export default function App () {
         onClose={closeAllPopups}
         onUpdateUser={handleUpdateUser}
         onOverlayClick={handleOverlayClick}
-        isLoading={isLoading}
+        renderLoading={renderLoading}
       />
 
       {isEditAddPlacePopupOpen && closeAllPopups && (
@@ -211,16 +212,18 @@ export default function App () {
         isOpen={isEiditAvatarPopupOpen}
         onClose={closeAllPopups}
         onUpdateAvatar={handleUpdateAvatar}
-        isLoading={isLoading}
+        onOverlayClick={handleOverlayClick}
+        //handleOverlayClick={handleOverlayClick}
+        renderLoading={renderLoading}
       />
 
      <PopupWithSubmmitDelete
         isOpen ={isWithSubmmitDeletePopupOpen}
         onClose={closeAllPopups}
         onConfirmDelete={handleCardDelete}
-        onOverlayClick={handleOverlayClick}
-        isLoading={isLoading}
         currentCard={deletingCard}
+        onOverlayClick={handleOverlayClick}
+        renderLoading={renderLoading}
       />
 
     </div>

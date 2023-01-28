@@ -6,7 +6,7 @@ import {CurrentUserContext} from '../contexts/CurrentUserContext.js'
 //import { useRef } from "react";
 
 
-export default function EditProfilePopup (props) {
+export default function EditProfilePopup ( { onUpdateUser, handleEditProfileClick, handleOverlayClick, isOpen, onClose} ) {
   const currentUser = useContext(CurrentUserContext);
 
   const [name, setName]               = useState(''); // Стейт, в котором содержится значение инпута
@@ -23,13 +23,13 @@ export default function EditProfilePopup (props) {
 
   function handleSubmit (e) {
     e.preventDefault();
-    props.onUpdateUser(name, about);
+    onUpdateUser(name, about);
   } 
 
   // запрещаем браузеру переходить по адресу формы. передаем значения управляемых компонентов во внешний обработчик
   function handleSubmit (e) {
     e.preventDefault();
-    props.onUpdateUser(name, about);
+    onUpdateUser(name, about);
   } 
 
   // Обработчик изменения инпута, обновляет стейт
@@ -45,11 +45,11 @@ export default function EditProfilePopup (props) {
   return (
     <PopupWithForm 
       name ="edit" title="Редактировать профиль" 
-      isOpen={props.isOpen}
-      onClose={props.onClose}
-      onOverlayClick={props.handleOverlayClick}
+      isOpen={isOpen}
+      onClose={onClose}
+      onOverlayClick={handleOverlayClick}
       onSubmit={handleSubmit}
-      handleEditProfileClick = {props.handleEditProfileClick}
+      handleEditProfileClick = {handleEditProfileClick}
       >
         <input 
           value={name}

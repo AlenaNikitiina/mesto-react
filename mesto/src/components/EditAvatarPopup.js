@@ -2,27 +2,25 @@ import React from "react";
 import PopupWithForm from "./PopupWithForm";
 import { useRef } from "react";
 
-export default function EditAvatarPopup (props) {
+export default function EditAvatarPopup ( {onUpdateAvatar, handleOverlayClick, isOpen, onClose} ) {
 
   const avatarRef = useRef();
-  
-  ////* Значение инпута, полученное с помощью рефа */,
+
+  //
   function handleSubmit(evt) {
-  
     evt.preventDefault();
-    console.log("11111", avatarRef.current)
-    props.onUpdateAvatar(avatarRef.current.value);
+
+    onUpdateAvatar(avatarRef.current.value); // Значение инпута, полученное с помощью рефа
     avatarRef.current.value=""
   }
 
-
   return (
     <PopupWithForm 
-    name ="change-avatar" title="Обновить аватар" 
-    isOpen ={props.isOpen} 
-    onClose={props.onClose}
-    onOverlayClick={props.handleOverlayClick}
-    onSubmit={handleSubmit}
+      name ="change-avatar" title="Обновить аватар" 
+      isOpen ={isOpen} 
+      onClose={onClose}
+      handleOverlayClick={handleOverlayClick}
+      onSubmit={handleSubmit}
     >
       <input
         ref={avatarRef}
