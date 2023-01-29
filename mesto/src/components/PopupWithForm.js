@@ -1,5 +1,3 @@
-import React from "react"
-
 export default function PopupWithForm ( {name, title, children,  handleOverlayClick, onSubmit, isOpen, onClose} ) {
 
   return (

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useContext } from "react";
 import {CurrentUserContext} from '../contexts/CurrentUserContext.js'
 
-
+ 
 export default function AddPlacePopup ( {handleOverlayClick,onAddPlace, isOpen, onClose} ) {
   const currentUser = useContext(CurrentUserContext);
 
@@ -44,14 +44,14 @@ export default function AddPlacePopup ( {handleOverlayClick,onAddPlace, isOpen, 
     >
         <input
           //name={namePlace}
-          value={placeName}
+          value={placeName || ''}
           className="form__input popup__input titleInput" type="text" id="title" minLength="2" maxLength="30" placeholder="Название" required
           onChange={handleChangePlaceName}
         />
         <span className="form__input-error title-error"></span>
         <input
           //name={linkPlace}
-          value={placeLink}
+          value={placeLink || ''}
           className="form__input popup__input linkInput" type="url" id="link" placeholder="Ссылка на картинку" required
           onChange={handleChangePlaceLink}
         />

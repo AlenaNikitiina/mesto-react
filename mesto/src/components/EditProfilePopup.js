@@ -45,17 +45,19 @@ export default function EditProfilePopup ( { onUpdateUser, handleEditProfileClic
       renderLoading={renderLoading}
       >
         <input 
-          value={name}
+          value={name || ''}
           name={name}
           onChange={handleChangeName} // Значение элемента «привязывается» к значению стейта
-          className="form__input popup__input nameInput" id="nickName" type="text" minLength="2" maxLength="40" placeholder="Имя" required />
+          className="form__input popup__input nameInput" id="nickName" type="text" minLength="2" maxLength="40" placeholder="Имя" required
+        />
         <span className="form__input-error nickName-error"></span>
       
         <input 
           name={about}
-          value={about} 
+          value={about || ''} 
           onChange={handleChangeAbout}
-          className="form__input popup__input jobInput" id="about" type="text" minLength="2" maxLength="200" placeholder="О себе" required />
+          className="form__input popup__input jobInput" id="about" type="text" minLength="2" maxLength="200" placeholder="О себе" required
+        />
         <span className="form__input-error about-error"></span>
     </ PopupWithForm>
   )
