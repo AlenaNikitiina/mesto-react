@@ -3,28 +3,28 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { useContext } from "react";
 
 
-export default function Card (props, card, onCardLike, onClickDeleteCard) {
+export default function Card ( { card, name, link, likes, onCardClick, onCardLike, onClickDeleteCard, handleOverlayClick} ) {
   const currentUser = useContext(CurrentUserContext);
   
-  const isOwn = props.card.owner._id === currentUser._id; // мы ли владельцы текущей карточки ?
+  const isOwn = card.owner._id === currentUser._id; // мы ли владельцы текущей карточки ?
 
-  const isLiked = props.card.likes.some(i => i._id === currentUser._id); // есть ли у карточки лайк, поставленный текущим пользователем ?
+  const isLiked = card.likes.some(i => i._id === currentUser._id); // есть ли у карточки лайк, поставленный текущим пользователем ?
   const cardLikeButton = ( `element__like 
     ${isLiked && 'element__like_active' }` ); // Создаём переменную, кот после зададим в `className` для кнопки лайка
 
   // увеличить карточку, zoom
   function handleCardClickZoom() {
-    props.onCardClick(props.card);
+    onCardClick(card);
   } 
 
   // обработчик клика лайка
   function handleLikeClick() {
-    props.onCardLike(props.card);
+    onCardLike(card);
   }
 
   // удалить карточку
   function handleDeleteClick() {
-    props.onClickDeleteCard(props.card); // обработчик в кот мы вызывваем ф из пропсов, передаем в него карточку
+    onClickDeleteCard(card); // обработчик в кот мы вызывваем ф из пропсов, передаем в него карточку
   }
 
   return (
@@ -35,22 +35,24 @@ export default function Card (props, card, onCardLike, onClickDeleteCard) {
               className="element__trash-button"
               type="button"
               aria-label="удалить карточку"
-              onClick={handleDeleteClick} />
+              onClick={handleDeleteClick}
+              onMouseDown={handleOverlayClick}
+            />
           )}
           <img 
             className="element__foto" 
-            src={props.link} 
-            alt={`изображение: ${props.name}`}
+            src={link} 
+            alt={`изображение: ${name}`}
             onClick={handleCardClickZoom}
             />
-          <h2 className="element__title">{props.name}</h2>
+          <h2 className="element__title">{name}</h2>
           <button 
             className={cardLikeButton}
             type="button"
             aria-label="поставить лайк карточке"
             onClick={handleLikeClick}
             />
-          <span className="element__like-counter">{props.likes.length}</span>
+          <span className="element__like-counter">{likes.length}</span>
         </article>
       </li>
     </div>

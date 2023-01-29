@@ -3,17 +3,13 @@ import PopupWithForm from "./PopupWithForm";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
 import {CurrentUserContext} from '../contexts/CurrentUserContext.js'
-//import { useRef } from "react";
 
 
-export default function EditProfilePopup ( { onUpdateUser, handleEditProfileClick, handleOverlayClick, isOpen, onClose} ) {
+export default function EditProfilePopup ( { onUpdateUser, handleEditProfileClick, handleOverlayClick, renderLoading, isOpen, onClose} ) {
   const currentUser = useContext(CurrentUserContext);
 
-  const [name, setName]               = useState(''); // Стейт, в котором содержится значение инпута
-  const [about, setAbout] = useState('');
-  //const nameRef        = useRef();
-  //const descriptionRef = useRef();
-
+  const [name, setName]    = useState(''); // Стейт, в котором содержится значение инпута
+  const [about, setAbout]  = useState('');
   
   // После загрузки текущего пользователя из API его данные будут использованы в управляемых компонентах.
   useEffect(() => {
@@ -21,10 +17,6 @@ export default function EditProfilePopup ( { onUpdateUser, handleEditProfileClic
     setAbout(currentUser.about);
   }, [currentUser] ); 
 
-  function handleSubmit (e) {
-    e.preventDefault();
-    onUpdateUser(name, about);
-  } 
 
   // запрещаем браузеру переходить по адресу формы. передаем значения управляемых компонентов во внешний обработчик
   function handleSubmit (e) {
@@ -47,9 +39,10 @@ export default function EditProfilePopup ( { onUpdateUser, handleEditProfileClic
       name ="edit" title="Редактировать профиль" 
       isOpen={isOpen}
       onClose={onClose}
-      onOverlayClick={handleOverlayClick}
+      onMouseDown={handleOverlayClick}
       onSubmit={handleSubmit}
       handleEditProfileClick = {handleEditProfileClick}
+      renderLoading={renderLoading}
       >
         <input 
           value={name}

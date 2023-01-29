@@ -11,13 +11,14 @@ export default function EditAvatarPopup ( {onUpdateAvatar, handleOverlayClick, i
     evt.preventDefault();
 
     onUpdateAvatar(avatarRef.current.value); // Значение инпута, полученное с помощью рефа
-    avatarRef.current.value=""
+    avatarRef.current.value="";
   }
 
   return (
     <PopupWithForm 
-      name ="change-avatar" title="Обновить аватар" 
-      isOpen ={isOpen} 
+      name ="change-avatar"
+      title="Обновить аватар"
+      isOpen ={isOpen}
       onClose={onClose}
       handleOverlayClick={handleOverlayClick}
       onSubmit={handleSubmit}
