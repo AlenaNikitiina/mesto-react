@@ -3,19 +3,17 @@ import PopupWithForm from "./PopupWithForm";
 import { useEffect, useState, useContext } from "react";
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js'
 
-
 export default function EditProfilePopup ( { onUpdateUser, handleEditProfileClick, onOverlayClick, renderLoading, isOpen, onClose} ) {
   const currentUser = useContext(CurrentUserContext);
 
   const [name, setName]    = useState(''); // Стейт, в котором содержится значение инпута
   const [about, setAbout]  = useState('');
-  
+
   // После загрузки текущего пользователя из API его данные будут использованы в управляемых компонентах.
   useEffect(() => {
     setName(currentUser.name);
     setAbout(currentUser.about);
-  }, [currentUser] ); 
-
+  }, [currentUser, isOpen] ); 
 
   // запрещаем браузеру переходить по адресу формы. передаем значения управляемых компонентов во внешний обработчик
   function handleSubmit (e) {
@@ -33,7 +31,6 @@ export default function EditProfilePopup ( { onUpdateUser, handleEditProfileClic
     setAbout(evt.target.value);
   }
 
-
   return (
     <PopupWithForm 
       name ="edit" title="Редактировать профиль" 
@@ -43,6 +40,7 @@ export default function EditProfilePopup ( { onUpdateUser, handleEditProfileClic
       onSubmit={handleSubmit}
       handleEditProfileClick = {handleEditProfileClick}
       renderLoading={renderLoading}
+      buttonText={renderLoading ? `Сохранение...` : `Сохранить`}
       >
         <input 
           value={name || ''}

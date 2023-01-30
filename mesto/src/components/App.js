@@ -10,20 +10,19 @@ import PopupWithSubmmitDelete from "./PopupWithSubmmitDelete";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 
-
 export default function App () {
-
   // стейты(переменные) (привязан к одной ф и не выходит за пределы, выше)
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen]             = useState (false); // форма поменять имя работу \ ф-ия юз возвр массив в кот 2 элемента; текущие значение и ф-ия сеттер для его изм
-  const [isEditAddPlacePopupOpen, setIsEditAddPlacePopupOpen]           = useState (false); // форма доб фотку
-  const [isEiditAvatarPopupOpen, setIsEditAvatarPopupOpen]              = useState (false); // форма смена аватара
-  const [isWithSubmmitDeletePopupOpen, setIsWithSubmmitDeletePopupOpen] = useState (false); // форма подтверждения удаления карточки
-  const [selectedCard, setSelectedCard]                                 = useState (null);  // zoom при клике на фото
-  const [deletingCard, setDeletingCard]                                 = useState(null) // = false
+  // ф-ия юз возвр массив в кот 2 элемента; текущие значение и ф-ия сеттер для его изм
 
-  const [cards, setCards]              = useState([]); // для апи ssss
-  const [currentUser, setCurrentUser] = useState({}) // переменную состояния currentUser
-  //const [isLoading, setIsLoading]     = useState(false) // идет сохранение загрузка
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState (false); // форма поменять имя работу
+  const [isEditAddPlacePopupOpen, setIsEditAddPlacePopupOpen] = useState (false); // форма доб фотку
+  const [isEiditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState (false); // форма смена аватара
+  const [isWithSubmmitDeletePopupOpen, setIsWithSubmmitDeletePopupOpen] = useState (false); // форма подтверждения удаления карточки
+  const [selectedCard, setSelectedCard] = useState (null);  // zoom при клике на фото
+  const [deletingCard, setDeletingCard] = useState(null) // = false
+
+  const [cards, setCards]                 = useState([]); // для апи ssss
+  const [currentUser, setCurrentUser]     = useState({}) // переменную состояния currentUser
   const [renderLoading, setRenderLoading] = useState(false) // идет сохранение/ загрузка
 
   // ф состоит из колбэка(в кот находится запрос) и массива
@@ -72,10 +71,7 @@ export default function App () {
       closeAllPopups();
     }
   }
-
-/* 
-    if (evt.target.classList.contains('popup_opened')) // (evt.target === evt.currentTarget)
-*/
+  /* if (evt.target.classList.contains('popup_opened')) // (evt.target === evt.currentTarget)*/
 
   function closeAllPopups () {
     setIsEditProfilePopupOpen (false);
@@ -85,7 +81,6 @@ export default function App () {
     setSelectedCard (null);
     setDeletingCard(null);
   }
-
 
   // обработчик изменения данных пользователя. имя работа. from EditProfilePopup
   function handleUpdateUser(name, about) {
@@ -243,17 +238,3 @@ export default function App () {
   )
 
 }
-
-
-
-/*
-    // при загрузке
-   function renderLoading(isSending) {
-      if (isSending) {
-        this._submitButton.textContent = 'Сохранение...';
-      }
-      else {
-        this._submitButton.textContent = this._buttonDefaultText;
-      }
-    }
-      */
