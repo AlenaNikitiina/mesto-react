@@ -1,10 +1,9 @@
 import React from "react";
+import { useEffect, useState, useContext } from "react";
 import PopupWithForm from "./PopupWithForm";
 import {CurrentUserContext} from '../contexts/CurrentUserContext.js'
-import { useContext } from "react";
-import { useEffect, useState } from "react";
 
-export default function EditAvatarPopup ( {onUpdateAvatar, handleOverlayClick, isOpen, onClose} ) {
+export default function EditAvatarPopup ( {onUpdateAvatar, onOverlayClick, renderLoading, isOpen, onClose} ) {
   const currentUser = useContext(CurrentUserContext);
  
   const [avatar, setAvatar] = useState(''); // Стейт, в котором содержится значение инпута
@@ -13,14 +12,12 @@ export default function EditAvatarPopup ( {onUpdateAvatar, handleOverlayClick, i
     useEffect(() => {
       setAvatar(currentUser.avatar);
       setAvatar(''); //
-    }, [currentUser] ); 
+    }, [currentUser, isOpen] ); 
 
   //
   function handleSubmit(evt) {
     evt.preventDefault();
-
     onUpdateAvatar(avatar); // Значение инпута, полученное с помощью рефа
-    //avatar.current.value='';
   }
 
    // Обработчик изменения инпута, обновляет стейт
@@ -34,8 +31,9 @@ export default function EditAvatarPopup ( {onUpdateAvatar, handleOverlayClick, i
       title="Обновить аватар"
       isOpen ={isOpen}
       onClose={onClose}
-      handleOverlayClick={handleOverlayClick}
+      onOverlayClick={onOverlayClick}
       onSubmit={handleSubmit}
+      buttonText={renderLoading ? `Сохранение...` : `Сохранить`}
     >
       <input
         onChange={handleChangeAvatar}
@@ -46,49 +44,3 @@ export default function EditAvatarPopup ( {onUpdateAvatar, handleOverlayClick, i
   </ PopupWithForm>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-/*
-import React from "react";
-import PopupWithForm from "./PopupWithForm";
-import { useRef } from "react";
-
-export default function EditAvatarPopup ( {onUpdateAvatar, handleOverlayClick, isOpen, onClose} ) {
-
-  const avatarRef = useRef();
-
-  //
-  function handleSubmit(evt) {
-    evt.preventDefault();
-
-    onUpdateAvatar(avatarRef.current.value); // Значение инпута, полученное с помощью рефа
-    avatarRef.current.value="";
-  }
-
-  return (
-    <PopupWithForm 
-      name ="change-avatar"
-      title="Обновить аватар"
-      isOpen ={isOpen}
-      onClose={onClose}
-      handleOverlayClick={handleOverlayClick}
-      onSubmit={handleSubmit}
-    >
-      <input
-        ref={avatarRef}
-        className="form__input popup__input linkInput" type="url" id="avatarlink" placeholder="Ссылка на картинку" required
-      />
-      <span className="form__input-error avatarlink-error"></span>
-  </ PopupWithForm>
-  )
-}
-*/
