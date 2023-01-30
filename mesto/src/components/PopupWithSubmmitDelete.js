@@ -1,7 +1,7 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
-export default function PopupWithSubmmitDelete ({currentCard, handleOverlayClick, onConfirmDelete, renderLoading, isOpen, onClose}) {
+export default function PopupWithSubmmitDelete ({currentCard, onOverlayClick, onConfirmDelete, renderLoading, isOpen, onClose}) {
   
   // обработчик удаления карточки, в кот вызвали ф из пропсов
   function handleSubmit (e) {
@@ -16,7 +16,7 @@ export default function PopupWithSubmmitDelete ({currentCard, handleOverlayClick
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      onOverlayClick={handleOverlayClick}
+      onOverlayClick={onOverlayClick}
       renderLoading={renderLoading}
     >
     </ PopupWithForm>

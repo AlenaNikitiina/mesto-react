@@ -1,11 +1,10 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
-import { useEffect, useState } from "react";
-import { useContext } from "react";
-import {CurrentUserContext} from '../contexts/CurrentUserContext.js'
+import { useEffect, useState, useContext } from "react";
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js'
 
 
-export default function EditProfilePopup ( { onUpdateUser, handleEditProfileClick, handleOverlayClick, renderLoading, isOpen, onClose} ) {
+export default function EditProfilePopup ( { onUpdateUser, handleEditProfileClick, onOverlayClick, renderLoading, isOpen, onClose} ) {
   const currentUser = useContext(CurrentUserContext);
 
   const [name, setName]    = useState(''); // Стейт, в котором содержится значение инпута
@@ -34,12 +33,13 @@ export default function EditProfilePopup ( { onUpdateUser, handleEditProfileClic
     setAbout(evt.target.value);
   }
 
+
   return (
     <PopupWithForm 
       name ="edit" title="Редактировать профиль" 
       isOpen={isOpen}
       onClose={onClose}
-      onMouseDown={handleOverlayClick}
+      onOverlayClick={onOverlayClick}
       onSubmit={handleSubmit}
       handleEditProfileClick = {handleEditProfileClick}
       renderLoading={renderLoading}

@@ -1,8 +1,8 @@
-export default function PopupWithForm ( {name, title, children,  handleOverlayClick, onSubmit, isOpen, onClose} ) {
+export default function PopupWithForm ( {name, title, children, onOverlayClick, onSubmit, isOpen, onClose} ) {
 
   return (
     <div className={`popup popup_${name} ${isOpen ? 'popup_opened' : ""}  popup_edit popup_add popup_change-avatar popup_delete-card`} 
-     onMouseDown={handleOverlayClick}>
+     onMouseDown={onOverlayClick}>
       <div className="popup__container form">
         <button
           className="popup__close-button"
@@ -15,7 +15,6 @@ export default function PopupWithForm ( {name, title, children,  handleOverlayCl
           name={`popup_${name}`}
           onSubmit={onSubmit}
           className="popup__form form__edit form__add form__avatar"
-          noValidate
         >
           {children}
           <button className="popup__save-button popup__button form__submit" type="submit" >Сохранить</button>
@@ -24,5 +23,3 @@ export default function PopupWithForm ( {name, title, children,  handleOverlayCl
     </div>
   )
 }
-
-//

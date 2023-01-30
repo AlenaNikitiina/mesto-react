@@ -1,21 +1,22 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
-import { useEffect, useState } from "react";
-import { useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import {CurrentUserContext} from '../contexts/CurrentUserContext.js'
 
  
-export default function AddPlacePopup ( {handleOverlayClick,onAddPlace, isOpen, onClose} ) {
+export default function AddPlacePopup ( {onAddPlace, onOverlayClick, isOpen, onClose} ) {
   const currentUser = useContext(CurrentUserContext);
 
   const [placeName, setPlaceName] = useState(''); // Стейт, в котором содержится значение инпута
   const [placeLink, setPlaceLink] = useState('');
 
+  /* delete
     // После загрузки текущего пользователя из API его данные будут использованы в управляемых компонентах.
     useEffect(() => {
       setPlaceName(currentUser.placeName);
       setPlaceLink(currentUser.placeLink);
     }, [currentUser] );
+*/
 
     // Обработчик изменения инпута, обновляет стейт
     function handleChangePlaceName (evt) {
@@ -32,6 +33,11 @@ export default function AddPlacePopup ( {handleOverlayClick,onAddPlace, isOpen, 
     onAddPlace(placeName,placeLink);
   } 
 
+  // очищаем импуты
+  useEffect(() => {
+    setPlaceName('');
+    setPlaceLink('');
+  }, [isOpen] );
 
   return (
     <PopupWithForm 
@@ -39,7 +45,7 @@ export default function AddPlacePopup ( {handleOverlayClick,onAddPlace, isOpen, 
       title="Новое место" 
       isOpen={isOpen}
       onClose={onClose}
-      onOverlayClick={handleOverlayClick}
+      onOverlayClick={onOverlayClick}
       onSubmit={handleSubmit}
     >
         <input

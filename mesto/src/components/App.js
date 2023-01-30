@@ -68,13 +68,13 @@ export default function App () {
 
   //клик на оверлэй, вне формы
   function handleOverlayClick (evt) {
-    if (evt.target === evt.currentTarget ) {
+    if (evt.target === evt.currentTarget) {
       closeAllPopups();
     }
   }
 
-/* function handleOverlayClick (evt) {
-    if (evt.target.classList.contains('popup_opened'))
+/* 
+    if (evt.target.classList.contains('popup_opened')) // (evt.target === evt.currentTarget)
 */
 
   function closeAllPopups () {
@@ -202,14 +202,14 @@ export default function App () {
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
         onUpdateUser={handleUpdateUser}
-        onMouseDown={handleOverlayClick}
+        onOverlayClick={handleOverlayClick}
         renderLoading={renderLoading}
       />
 
       <AddPlacePopup
         isOpen={isEditAddPlacePopupOpen}
         onClose={closeAllPopups}
-        onMouseDown={handleOverlayClick}
+        onOverlayClick={handleOverlayClick}
         onAddPlace={handleAddPlaceSubmit}
         renderLoading={renderLoading}
       />
@@ -218,8 +218,7 @@ export default function App () {
         isOpen={isEiditAvatarPopupOpen}
         onClose={closeAllPopups}
         onUpdateAvatar={handleUpdateAvatar}
-        onMouseDown={handleOverlayClick}
-        //handleOverlayClick={handleOverlayClick}
+        onOverlayClick={handleOverlayClick}
         renderLoading={renderLoading}
       />
 
@@ -228,7 +227,7 @@ export default function App () {
         onClose={closeAllPopups}
         onConfirmDelete={handleCardDelete}
         currentCard={deletingCard}
-        onMouseDown={handleOverlayClick}
+        onOverlayClick={handleOverlayClick}
         renderLoading={renderLoading}
       />
 
@@ -236,7 +235,7 @@ export default function App () {
         card={selectedCard}
         isOpen={setSelectedCard}
         onClose={closeAllPopups}
-        onMouseDown={handleOverlayClick}
+        onOverlayClick={handleOverlayClick}
       />
 
     </div>

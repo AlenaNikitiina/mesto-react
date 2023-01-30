@@ -1,20 +1,20 @@
 import React from "react";
+import { useEffect, useState, useContext } from "react";
 import PopupWithForm from "./PopupWithForm";
 import {CurrentUserContext} from '../contexts/CurrentUserContext.js'
-import { useContext } from "react";
-import { useEffect, useState } from "react";
 
-export default function EditAvatarPopup ( {onUpdateAvatar, handleOverlayClick, isOpen, onClose} ) {
+export default function EditAvatarPopup ( {onUpdateAvatar, onOverlayClick, isOpen, onClose} ) {
   const currentUser = useContext(CurrentUserContext);
  
   const [avatar, setAvatar] = useState(''); // Стейт, в котором содержится значение инпута
 
+  /*
   // После загрузки текущего пользователя из API его данные будут использованы в управляемых компонентах.
     useEffect(() => {
       setAvatar(currentUser.avatar);
       setAvatar(''); //
     }, [currentUser] ); 
-
+*/
   //
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -28,13 +28,19 @@ export default function EditAvatarPopup ( {onUpdateAvatar, handleOverlayClick, i
     setAvatar(evt.target.value);
   }
 
+    
+  // очищаем импуты
+  useEffect(() => {
+    setAvatar('');
+  }, [isOpen] );
+
   return (
     <PopupWithForm 
       name ="change-avatar"
       title="Обновить аватар"
       isOpen ={isOpen}
       onClose={onClose}
-      handleOverlayClick={handleOverlayClick}
+      onOverlayClick={onOverlayClick}
       onSubmit={handleSubmit}
     >
       <input

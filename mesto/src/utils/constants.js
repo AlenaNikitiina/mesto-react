@@ -1,4 +1,5 @@
-//// Все константы проекта
+
+/*//// Все константы проекта
 // Формы
 export const formEdit = document.querySelector('.form__edit'); // форма редактирования профиля
 export const formAdd = document.querySelector('.form__add'); // форма добавления карточки
@@ -31,3 +32,4 @@ export const setting = {
   submitButtonSelector: '.form__submit',
   buttonElementInactiv: 'form__submit_inactive',
 }
+*/

@@ -28,8 +28,10 @@ export default function Main ( {handleEditAvatarClick, handleEditProfileClick, h
             {cards.map(card => {
               return (
                 <Card
-                  card={card}         key={card._id}
-                  name={card.name}    link={card.link}
+                  card={card}
+                  key={card._id}
+                  name={card.name}
+                  link={card.link}
                   likes={card.likes}
                   onCardClick={onCardClick}
                   onCardLike={onCardLike}
